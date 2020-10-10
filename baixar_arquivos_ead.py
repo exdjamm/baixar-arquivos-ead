@@ -6,11 +6,13 @@ from eadapi import SessionEad
 from scrap_utils import getDataByDict as pegar_dados_por_dicionario
 from time import sleep as dormir
 import os.path as path
+from EADscrapping import ScrapEAD
 
 run_bash = run.run
 caminho_de_base = str()
 username = str()
 password = str()
+cursos = dict()
 # numeros = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 # coisa do link que vais ser um arquivo : resource
 
@@ -104,13 +106,27 @@ def pegar_resposta_do_pedido_de_link(link: str) -> Response:
     
     return resposta_pedido
 
+def definir_cursos():
+    global cursos
+    main =  ScrapEAD(username, passoword)
+    main.setToken()
+    main.login()
+    main.setSessionKey()
+    main.setCourses()
+    main.setCoursesTasks()
+    main.saveTaskJSON()
+    cursos = main.getCourses()
+
+    pass
+
 def main() -> None:
     global session
+    global cursos
+
     # print(caminho_de_base)
-    if not  pegar_informacoes_do_usuario():
+    if not pegar_informacoes_do_usuario():
         return None
 
-    cursos = None
     try:
         session =  SessionEad(username, password)
     except Exception :
@@ -119,8 +135,8 @@ def main() -> None:
 
     # pegar_links()
 
-    with open("./courses.json", 'r') as json:
-        cursos = carregar(json.read())
+    # with open("./courses.json", 'r') as json:
+    #     cursos = carregar(json.read())
 
     for curso in cursos:
 
