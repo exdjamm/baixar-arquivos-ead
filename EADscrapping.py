@@ -2,7 +2,7 @@ from requests import Session
 from bs4 import BeautifulSoup
 import os.path
 from json import dumps, loads
-from filterPages import getDataByDict
+from scrap_utils import getDataByDict
 from time import sleep
 
 class ScrapEAD(Session):
