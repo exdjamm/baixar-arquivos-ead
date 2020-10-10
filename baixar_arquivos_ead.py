@@ -13,6 +13,7 @@ caminho_de_base = str()
 username = str()
 password = str()
 cursos = dict()
+teste = False
 # numeros = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 # coisa do link que vais ser um arquivo : resource
 
@@ -31,6 +32,7 @@ def pegar_informacoes_do_usuario() -> bool:
     global caminho_de_base
     global username
     global password
+    global teste
 
     if path.exists('login'):
         with open('login', 'r') as dados_usuario:
@@ -55,6 +57,12 @@ def pegar_informacoes_do_usuario() -> bool:
 
             username = dados_lista[1]
             password = dados_lista[2]
+
+            if len(dados_lista) > 3:
+                if "True"  in dados_lista[3] :
+                    teste = True
+                else:
+                    teste = False
 
         return True
 
@@ -135,6 +143,7 @@ def main() -> None:
 
     # pegar_links()
     definir_cursos()
+    print(cursos)
     # with open("./courses.json", 'r') as json:
     #     cursos = carregar(json.read())
 
@@ -152,7 +161,7 @@ def main() -> None:
 
         dados_do_curso = cursos[curso]
         tarefas_do_curso = dados_do_curso['tasks']
-
+        print(dados_do_curso)
         for dados_da_tarefa_do_curso in tarefas_do_curso:
             link_da_tarefa = dados_da_tarefa_do_curso['link'] if dados_da_tarefa_do_curso['link'] is not None else "sem link"
             titulo_da_tarefa = dados_da_tarefa_do_curso['title'].replace(' ', '-').replace('/', '-').replace("\\","-" ).replace(':', '').replace('?', '').replace('&', '').replace('*', '')
@@ -175,14 +184,16 @@ def main() -> None:
                 
                 
                 print(f"{sigla_do_curso} -> {link_da_tarefa}")
-    
-                if not e_link_tarefa:
-                    baixar_arquivos_da_pagina_do_curso(link_da_tarefa, sigla_do_curso, titulo_da_tarefa)
+                if not teste:
+                    if not e_link_tarefa:
+                        baixar_arquivos_da_pagina_do_curso(link_da_tarefa, sigla_do_curso, titulo_da_tarefa)
+                    else:
+                        criar_pasta_em_desktop(f"{sigla_do_curso}/{titulo_da_tarefa}")
+                        resposta_do_pedido_do_link = pegar_resposta_do_pedido_de_link(link_da_tarefa)
+                        baixar_arquivos_da_tarefa(resposta_do_pedido_do_link, sigla_do_curso, titulo_da_tarefa)
+                    dormir(0.5)
                 else:
-                    criar_pasta_em_desktop(f"{sigla_do_curso}/{titulo_da_tarefa}")
-                    resposta_do_pedido_do_link = pegar_resposta_do_pedido_de_link(link_da_tarefa)
-                    baixar_arquivos_da_tarefa(resposta_do_pedido_do_link, sigla_do_curso, titulo_da_tarefa)
-                dormir(0.5)
+                    continue
 
 
     pass
