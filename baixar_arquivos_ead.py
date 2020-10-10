@@ -108,7 +108,7 @@ def pegar_resposta_do_pedido_de_link(link: str) -> Response:
 
 def definir_cursos():
     global cursos
-    main =  ScrapEAD(username, passoword)
+    main =  ScrapEAD(username, password)
     main.setToken()
     main.login()
     main.setSessionKey()
