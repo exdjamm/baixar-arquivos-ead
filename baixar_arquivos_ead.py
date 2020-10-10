@@ -129,8 +129,7 @@ def definir_cursos():
 
 def main() -> None:
     global session
-    global cursos
-
+    
     # print(caminho_de_base)
     if not pegar_informacoes_do_usuario():
         return None
@@ -143,7 +142,7 @@ def main() -> None:
 
     # pegar_links()
     definir_cursos()
-    print(cursos)
+    # print(cursos)
     # with open("./courses.json", 'r') as json:
     #     cursos = carregar(json.read())
 
@@ -161,7 +160,10 @@ def main() -> None:
 
         dados_do_curso = cursos[curso]
         tarefas_do_curso = dados_do_curso['tasks']
-        print(dados_do_curso)
+        # print(dados_do_curso)
+        if  tarefas_do_curso == []:
+            continue
+
         for dados_da_tarefa_do_curso in tarefas_do_curso:
             link_da_tarefa = dados_da_tarefa_do_curso['link'] if dados_da_tarefa_do_curso['link'] is not None else "sem link"
             titulo_da_tarefa = dados_da_tarefa_do_curso['title'].replace(' ', '-').replace('/', '-').replace("\\","-" ).replace(':', '').replace('?', '').replace('&', '').replace('*', '')
