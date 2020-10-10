@@ -118,7 +118,7 @@ class ScrapEAD(Session):
 							if tarefaUrl is None:
 								tarefaUrl = tag.parent.get('href')
 							
-							self.__courses[course]['tasks'].append({"title":title, "notes":tarefaUrl})
+							self.__courses[course]['tasks'].append({"title":title, "link":tarefaUrl})
 							self.__tasks[course]['tasks'].append(title)
 			
 		
