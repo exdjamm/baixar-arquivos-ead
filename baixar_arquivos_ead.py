@@ -134,7 +134,7 @@ def main() -> None:
         return None
 
     # pegar_links()
-
+    definir_cursos()
     # with open("./courses.json", 'r') as json:
     #     cursos = carregar(json.read())
 
