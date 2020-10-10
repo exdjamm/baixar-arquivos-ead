@@ -79,7 +79,7 @@ def baixar_arquivos_da_tarefa(resposta: Response, caminho_do_curso: str, titulo_
         titulo_do_arquivo = tag_de_links.text.replace(' ', '-').replace('/', '-').replace("\\","-" ) 
 
         r = pegar_resposta_do_pedido_de_link(link_de_download)
-        if r.status_code == 200:
+        if (r.status_code == 200) and (not path.exists(f"{caminho_de_base}/{caminho_do_curso}/{titulo_tarefa}/{titulo_do_arquivo}")):
             with open(f"{caminho_de_base}/{caminho_do_curso}/{titulo_tarefa}/{titulo_do_arquivo}", 'wb') as doc:
                 doc.write(r.content)
                 print(f"Baixado o arquivo '{titulo_do_arquivo}'")
@@ -92,7 +92,7 @@ def baixar_arquivos_da_pagina_do_curso(link: str, pasta_do_curso: str, titulo_da
 
     r = pegar_resposta_do_pedido_de_link(link)
 
-    if r.status_code == 200:
+    if (r.status_code == 200) and (not path.exists(f"{caminho_de_base}/{pasta_do_curso}/{titulo_da_tarefa}")):
         # print(f"{caminho_de_base}/{pasta_do_curso}/{titulo_da_tarefa}")
         with open(f"{caminho_de_base}/{pasta_do_curso}/{titulo_da_tarefa}", 'wb') as doc:
             doc.write(r.content)
