@@ -53,6 +53,11 @@ class SessionEad(Session):
 		responde_text = self.post(self._url("login/index.php"), data=payload).text
 
 		return responde_text
+	
+	def set_new_login(self, username: str, password: str) -> None:
+		self.__login(username, password)
+
+		pass
 
 
 class ScrapEad(SessionEad):
