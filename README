@@ -1,0 +1,43 @@
+Primeiramente, Bom dia.
+
+Este é um script em python3.8 para baixar os arquivos dos cursos do site ead.ifms.edu.br.
+
+Este script foi feito para rodar em dispositivos linux, mas poderá podar em outros mudando somente o comando na linha 17 para o qual cria um diretorio em sua maquina.
+
+-------------------------------
+
+Para poder executa-lo precisará dos seguintes requerimentos:
+requests
+bs4
+
+Linux:
+sudo apt-get install python3-pip
+pip3 install requests bs4
+
+Others:
+Download python do site oficial (https://www.python.org/) e execute:
+pip install requests bs4
+
+Todos os outras libs/imports estarão junto ao arquivo.
+
+------------------------------
+
+Antes de executar crie um arquivo como nome "login" com as seguintes informaçoes:
+
+caminho da pasta será salvo os arquivos
+nome de usuario
+login do usuario
+
+Exemplo:
+
+/home/user/Desktop
+username
+password
+
+-----------------------------
+
+Execute o arquivo "baixar_arquivos_ead.py"
+
+-----------------------------
+
+
