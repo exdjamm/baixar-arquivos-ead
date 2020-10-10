@@ -106,7 +106,7 @@ def pegar_resposta_do_pedido_de_link(link: str) -> Response:
 
 def main() -> None:
     global session
-    print(caminho_de_base)
+    # print(caminho_de_base)
     if not  pegar_informacoes_do_usuario():
         return None
 
