@@ -55,6 +55,12 @@ class SessionEad(Session):
 		return responde_text
 
 
+class ScrapEad(SessionEad):
+	def __init__(self, username: str, password: str) -> None:
+		super(ScrapEad, self).__init__(self, username, password)
+		pass
+	pass
+
 if __name__ == '__main__':
 	login = input("Digite o seu login >>> ")
 	senha = input("Digite a sua senha >>> ")
