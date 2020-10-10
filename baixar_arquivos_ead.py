@@ -39,7 +39,7 @@ def pegar_informacoes_do_usuario() -> bool:
             for (linha, i) in zip(dados_lista, range(len(dados_lista))):
                 dados_lista[i] = linha.replace("\n", '')
 
-            print(dados_lista)
+            # print(dados_lista)
 
             if len(dados_lista) < 3:
                 print("Quantidades de dados insuficiente!")
