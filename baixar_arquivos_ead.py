@@ -157,9 +157,9 @@ def main() -> None:
         #     letras_adicionadas_a_sliga = primeira_4_letras_nome_do_curso
 
         #     sigla_do_curso += letras_adicionadas_a_sliga
-
-        # criar_pasta_em_desktop(configs['nome_pastas'][sigla_do_curso])
         sigla_do_curso = configs['nome_pastas'][curso]
+        criar_pasta_em_desktop(sigla_do_curso)
+
         
         dados_do_curso = cursos[curso]
         tarefas_do_curso = dados_do_curso['tasks']
