@@ -37,7 +37,7 @@ def definir_pastas(materias):
 	pass
 
 def save():
-	print(config)
+	# print(config)
 	with open("configs.json", 'w') as configs_json:
 		configs_json.write(dumps(config))
 

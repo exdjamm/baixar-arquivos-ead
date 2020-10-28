@@ -133,7 +133,7 @@ def main() -> None:
         return None
 
     try:
-        print(username, password)
+        # print(username, password)
         session =  SessionEad(username, password)
     except Exception :
         print("Seu login está errado, por favor verifique!")
@@ -160,8 +160,7 @@ def main() -> None:
 
         # criar_pasta_em_desktop(configs['nome_pastas'][sigla_do_curso])
         sigla_do_curso = configs['nome_pastas'][curso]
-        print(configs['nome_pastas'][curso])
-        pass
+        
         dados_do_curso = cursos[curso]
         tarefas_do_curso = dados_do_curso['tasks']
         # print(dados_do_curso)
