@@ -7,6 +7,8 @@ from scrap_utils import getDataByDict as pegar_dados_por_dicionario
 from time import sleep as dormir
 import os.path as path
 from EADscrapping import ScrapEAD
+from coisas_do_user import main as save_config_user, definir_pastas as get_pastas_kk
+
 
 run_bash = run.run
 caminho_de_base = str()
@@ -14,6 +16,7 @@ username = str()
 password = str()
 cursos = dict()
 teste = False
+configs = dict()
 # numeros = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 # coisa do link que vais ser um arquivo : resource
 
@@ -33,43 +36,33 @@ def pegar_informacoes_do_usuario() -> bool:
     global username
     global password
     global teste
+    global configs
 
-    if path.exists('login'):
-        with open('login', 'r') as dados_usuario:
-            dados_lista	= dados_usuario.readlines()
-            
-            for (linha, i) in zip(dados_lista, range(len(dados_lista))):
-                dados_lista[i] = linha.replace("\n", '')
-
-            # print(dados_lista)
-
-            if len(dados_lista) < 3:
-                print("Quantidades de dados insuficiente!")
-                print(mensagem) 
-                return False
-
-            if not path.exists(dados_lista[0]):
-                print("Caminho forcencido não aceitavel!")
-                return False
-            else:
-                caminho_de_base = dados_lista[0]
-                # print(caminho_de_base)
-
-            username = dados_lista[1]
-            password = dados_lista[2]
-
-            if len(dados_lista) > 3:
-                if "True"  in dados_lista[3] :
-                    teste = True
-                else:
-                    teste = False
-
-        return True
-
+    if not path.exists('configs.json'):
+        save_config_user()
+       
+        load_config()
+        caminho_de_base = configs['path']
+        username = configs['login']['username']
+        password = configs['login']['password']
+        # print(password, username)
     else:
-        print(mensagem)
-        return False
-			
+        load_config()
+        caminho_de_base = configs['path']
+        username = configs['login']['username']
+        password = configs['login']['password']
+
+        # print(password, username)
+
+    return True
+
+
+def load_config():
+    global configs
+    with open('configs.json', 'r') as cc:
+            configs = carregar(cc.read())
+    pass
+		
 
 def criar_pasta_em_desktop(path: str) -> None:
     # print(caminho_de_base)
@@ -116,6 +109,9 @@ def pegar_resposta_do_pedido_de_link(link: str) -> Response:
 
 def definir_cursos():
     global cursos
+    global cursos_lista
+    cursos_lista = list()
+
     main =  ScrapEAD(username, password)
     main.setToken()
     main.login()
@@ -124,7 +120,9 @@ def definir_cursos():
     main.setCoursesTasks()
     main.saveTaskJSON()
     cursos = main.getCourses()
-
+    
+    for i in cursos:
+        cursos_lista.append(i)
     pass
 
 def main() -> None:
@@ -135,6 +133,7 @@ def main() -> None:
         return None
 
     try:
+        print(username, password)
         session =  SessionEad(username, password)
     except Exception :
         print("Seu login está errado, por favor verifique!")
@@ -145,19 +144,24 @@ def main() -> None:
     # print(cursos)
     # with open("./courses.json", 'r') as json:
     #     cursos = carregar(json.read())
-
+    if configs.get('nome_pastas') is None :
+        get_pastas_kk(cursos_lista)
+        load_config()    
+    
     for curso in cursos:
 
-        sigla_do_curso = str()
-        for parte_nome_do_curso in curso.split(' '):
-            primeira_4_letras_nome_do_curso = parte_nome_do_curso[:3] 
+        # sigla_do_curso = str()
+        # for parte_nome_do_curso in curso.split(' '):
+        #     primeira_4_letras_nome_do_curso = parte_nome_do_curso[:3] 
 
-            letras_adicionadas_a_sliga = primeira_4_letras_nome_do_curso
+        #     letras_adicionadas_a_sliga = primeira_4_letras_nome_do_curso
 
-            sigla_do_curso += letras_adicionadas_a_sliga
+        #     sigla_do_curso += letras_adicionadas_a_sliga
 
-        criar_pasta_em_desktop(sigla_do_curso)
-
+        # criar_pasta_em_desktop(configs['nome_pastas'][sigla_do_curso])
+        sigla_do_curso = configs['nome_pastas'][curso]
+        print(configs['nome_pastas'][curso])
+        pass
         dados_do_curso = cursos[curso]
         tarefas_do_curso = dados_do_curso['tasks']
         # print(dados_do_curso)
